@@ -1,15 +1,32 @@
 {
-  "vendor": "CHANGE_ME",
-  "name": "CHANGE_ME",
-  "version": "0.0.0",
-  "title": "CHANGE_ME",
-  "description": "CHANGE_ME",
+  "vendor": "tiendasjumboqaio",
+  "name": "delivery-add-cart",
+  "version": "0.0.1",
+  "title": "Custom quantity",
+  "description": "Custom quantity",
   "builders": {
-    "react": "3.x",
     "messages": "1.x",
-    "docs": "0.x"
+    "store": "0.x",
+    "react": "3.x",
+    "docs": "0.x",
+    "assets": "0.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vtex.styleguide": "9.x",
+    "vtex.css-handles": "0.x",
+    "vtex.store": "2.x",
+    "vtex.store-resources": "0.x",
+    "vtex.store-graphql": "2.x",
+    "vtex.search-graphql": "0.x",
+    "vtex.checkout-graphql": "0.x",
+    "vtex.render-runtime": "8.x",
+    "vtex.add-to-cart-button": "0.x",
+    "vtex.product-context": "0.x",
+    "vtex.product-quantity": "1.x",
+    "vtex.order-items": "0.x",
+    "vtex.device-detector": "0.x",
+    "tiendasjumboqaio.jumbo-graphql-service": "2.x"
+  },
   "registries": [
     "smartcheckout"
   ],

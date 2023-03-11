@@ -1,0 +1,37 @@
+query getProductInfo($id: ID!) {
+  product(identifier: { field: sku, value: $id })
+  @context(provider: "vtex.search-graphql") {
+    productId
+    link
+    itemMetadata{
+      items{
+        id
+        assemblyOptions{
+          id
+          name
+          required
+          composition{
+            minQuantity
+
+          }
+          inputValues {
+            label
+            maxLength
+            type
+            defaultValue
+          }
+        }
+      }
+    }
+    items{
+      itemId
+      sellers{
+        sellerDefault
+        commertialOffer{
+          Price
+          AvailableQuantity
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "delivery-custom-add2cart-button": {
+    "component": "Add2CartButton",
+    "composition": "children",
+    "allowed": "*"
+  },
+  "delivery-custom-add3cart-quantity": {
+    "component": "Add3CartButton",
+    "composition": "children",
+    "allowed": "*"
+  }
+}
