@@ -24,11 +24,11 @@ interface DropdownProps {
   selectedQuantity: QuantitySelectorStepType
   availableQuantity: number
   size: NumericSize
-  showUnit: boolean
+  // showUnit: boolean
   quantitySelectorStep?: QuantitySelectorStepType
   selectedItem?: ProductContext['selectedItem']
-  showLabel?: boolean
-  warningQuantityThreshold: number
+  // showLabel?: boolean
+  // warningQuantityThreshold: number
 }
 
 export type OnChangeCallback = {
@@ -90,13 +90,13 @@ const DropdownProductQuantity: FunctionComponent<DropdownProps> = ({
   selectedQuantity,
   size = 'small',
   availableQuantity,
-  showUnit,
+  // showUnit,
   quantitySelectorStep,
   // selectedItem,
-  showLabel = true,
-  warningQuantityThreshold = 9999,
+  // showLabel = true,
+  // warningQuantityThreshold = 9999,
 }) => {
-  console.log(showLabel, warningQuantityThreshold)
+  // console.log(showLabel, warningQuantityThreshold)
   const [internalBehavior, setInternalBehavior] = useState<InternalBehavior>
     (
       'dropdown'
@@ -163,16 +163,9 @@ const DropdownProductQuantity: FunctionComponent<DropdownProps> = ({
           value={selectedQuantity}
           onChange={(event: { target: { value: string } }) => handleChange(event.target.value)}
           placeholder=" "
-          showUnit={showUnit}
           quantitySelectorStep={quantitySelectorStep}
-          showLabel={true}
-          warningQuantityThreshold={9999}
         />
       </div>
-      {/* // )
-  // }
-
-  // return ( */}
       <div
         className={
           isMobile

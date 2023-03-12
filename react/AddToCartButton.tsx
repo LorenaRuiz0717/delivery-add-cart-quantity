@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
-//import { ProductSummaryQuantity } from 'vtex.product-quantity'
+import DropdownProductQuantity from './components/quantity/DropdownProductQuantity'
+import StepperProductQuantity from './components/quantity/StepperProductQuantity'
 import { Wrapper } from 'vtex.add-to-cart-button'
 import { useOrderForm } from 'vtex.store-resources/OrderFormContext'
 import { useProduct } from 'vtex.product-context'
@@ -10,8 +11,10 @@ import GETPRODUCTINFO from './queries/query.getProductInfo.gql'
 import Loader from './components/Loader'
 import { Button } from 'vtex.styleguide'
 import { Link } from 'vtex.render-runtime'
+import { useProductDispatch } from 'vtex.product-context/ProductDispatchContext'
 
-const add2CartButton: StorefrontFunctionComponent<any> = ({
+
+const add3CartButton: StorefrontFunctionComponent<any> = ({
   children,
   isContextSummarySearch = false,
   isContextPDP = false
@@ -21,11 +24,19 @@ const add2CartButton: StorefrontFunctionComponent<any> = ({
   const [productSelected, setProductSelected] = useState<any>()
 
   const orderFormContext = useOrderForm()
-  const { selectedItem } = useProduct()
+  console.log('orderform', orderFormContext)
+  console.log('productSelected', productSelected)
 
+  const { selectedItem, selectedQuantity } = useProduct()
+
+  const dispatch = useProductDispatch()
+
+  console.log('selectedItem', selectedItem)
+  console.log('selectedQuantity', selectedQuantity)
   const [getProduct, { data: productInfo }] = useLazyQuery(GETPRODUCTINFO, {
     fetchPolicy: 'network-only',
   })
+
   useEffect(() => {
     if (
       orderFormContext.orderForm &&
@@ -66,6 +77,7 @@ const add2CartButton: StorefrontFunctionComponent<any> = ({
 
   const sellerActive = item.sellers.find((seller: any) => seller.sellerDefault == true)
   const { commertialOffer } = sellerActive;
+  console.log("commertialOffer", commertialOffer, "item", item)
 
   //add product after set modal
   const handleSaveProduct = () => {
@@ -74,12 +86,17 @@ const add2CartButton: StorefrontFunctionComponent<any> = ({
       const sellerId = productSelected?.sellers[sellerDefaultIndex]?.sellerId
       const name = productSelected?.name
       const nameComplete = productSelected?.nameComplete
-      /* console.log(nameComplete, name, sellerId, productSelected?.itemId) */
+      console.log("handleSaveProduct", nameComplete, name, sellerId, productSelected?.itemId)
       /* document.cookie = `add2cartbtn=${productSelected?.itemId},,${sellerId},,${name},,${nameComplete}` */
       localStorage.setItem("add2cartbtn", `${productSelected?.itemId},,${sellerId},,${name},,${nameComplete}`)
     }
   }
 
+  const handleClick: React.MouseEventHandler<HTMLDivElement> = e => {
+    e.preventDefault()
+    // Stop propagation so it doesn't trigger the Link component above
+    e.stopPropagation()
+  }
   return (
     <>
       {deliveryModalNeedsAppear ? (
@@ -127,21 +144,77 @@ const add2CartButton: StorefrontFunctionComponent<any> = ({
               : ''
               }`}
           >
-            {/*  <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-quantity">
-              <ProductSummaryQuantity />
-            </div> */}
-            <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
-              <Wrapper
-                text={'Comprar'}
-                unavailableText="No disponible"
-                customToastUrl="/checkout/#/cart"
-              />
+            <div
+              onClick={handleClick}
+            // className={`${handles.summaryContainer} center mw-100`}
+            >
+              <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-quantity">
+                DropdownQuantityNew
+                <DropdownProductQuantity
+                  dispatch={dispatch}
+                  itemId={selectedItem}
+                  selectedQuantity={selectedQuantity}
+                  availableQuantity={commertialOffer.AvailableQuantity}
+                  //  onChange={handleSaveProduct}
+                  quantitySelectorStep={'unitMultiplier'}
+                  size={'small'}
+                />
+              </div>
+              <div>
+                CustomStepper
+                <StepperProductQuantity
+                  dispatch={dispatch}
+                  unitMultiplier={1}
+                  measurementUnit={'un'}
+                  size={'small'}
+                  selectedQuantity={selectedQuantity}
+                  availableQuantity={commertialOffer.AvailableQuantity}
+                  showUnit={true}
+                />
+              </div>
+              <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
+                <Wrapper
+                  text={'Agregar'}
+                  unavailableText="No disponible"
+                  customToastUrl="/checkout/#/cart"
+                />
+              </div>
             </div>
           </div>
         </>
-      )}
+
+      )}{console.log("commertialOffer.AvailableQuantity", commertialOffer.AvailableQuantity, "commertialOffer", commertialOffer)}
+      {console.log("handleSaveProduct", productSelected?.itemId)}
     </>
+
   )
+
 }
 
-export default add2CartButton
+export default add3CartButton
+
+
+{/* BaseProduct
+             <BaseProductQuantity
+             dispatch={getProduct}
+             selectedItem={selectedItem.itemId}
+             showLabel={true}
+             selectedQuantity={commertialOffer.AvailableQuantity}
+             selectorType={'dropdown'}
+             size={'small'}
+             warningQuantityThreshold={0}
+             showUnit={true}
+             quantitySelectorStep={'unitMultiplier'}
+             /> */}
+
+{/* ProductQuantity
+                <ProductQuantity
+                    warningQuantityThreshold={0}
+                    showLabel={true}
+                    size={'large'}
+                    selectorType={'dropdown'}
+                    showUnit={true}
+                    quantitySelectorStep={'unitMultiplier'}
+                    dispatch={selectedItem}
+                    selectedQuantity={0}
+                /> */}

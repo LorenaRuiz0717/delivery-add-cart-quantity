@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
-import StepperProductQuantity from './components/quantity/StepperProductQuantity'
+// import StepperProductQuantity from './components/quantity/StepperProductQuantity'
 import DropdownProductQuantity from './components/quantity/DropdownProductQuantity'
 import { Wrapper } from 'vtex.add-to-cart-button'
 import { useOrderForm } from 'vtex.store-resources/OrderFormContext'
@@ -12,7 +12,7 @@ import Loader from './components/Loader'
 import { Button } from 'vtex.styleguide'
 import { Link } from 'vtex.render-runtime'
 import { useProductDispatch } from 'vtex.product-context/ProductDispatchContext'
-import { FormattedMessage } from 'react-intl'
+// import { FormattedMessage } from 'react-intl'
 
 
 
@@ -20,8 +20,8 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
   children,
   isContextSummarySearch = false,
   isContextPDP = false,
-  warningQuantityThreshold = 9999,
-  showLabel = true,
+  // warningQuantityThreshold = 9999,
+  // showLabel = true,
 }: any) => {
   const [deliveryModalNeedsAppear, setDeliveryVisibility] = useState<boolean | null>(null)
   const [loading, setLoading] = useState(true)
@@ -49,7 +49,7 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
 
     return null
   }
-  const showAvailable = availableQuantity <= warningQuantityThreshold
+  // const showAvailable = availableQuantity <= warningQuantityThreshold
 
 
   useEffect(() => {
@@ -171,22 +171,21 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
                   selectedQuantity={selectedQuantity}
                   availableQuantity={commertialOffer.AvailableQuantity}
                   size={'small'}
-                  showUnit={true}
+                  // showUnit={true}
                   quantitySelectorStep={'unitMultiplier'}
-                  warningQuantityThreshold={9999}
-                  showLabel={true}
+                // warningQuantityThreshold={9999}
+                // showLabel={true}
                 />
-                <div
-                // className={`${handles.quantitySelectorContainer} flex flex-column mb4`}
-                >
-                  {showLabel && (
+                <div>
+                  {/* // className={`${handles.quantitySelectorContainer} flex flex-column mb4`} */}
+                  {/* {showLabel && (
                     <div
                     // className={`${handles.quantitySelectorTitle} mb3 c-muted-2 t-body`}
                     >
                       <FormattedMessage id="store/product-quantity.quantity" />
                     </div>
-                  )}
-                  CustomStepper
+                  )} */}
+                  {/* CustomStepper
                   <StepperProductQuantity
                     dispatch={dispatch}
                     unitMultiplier={1}
@@ -197,31 +196,33 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
                     showUnit={true}
                   />
                 </div>
-              </div>
-              {showAvailable && (
+              </div> */}
+                  {/* {showAvailable && (
                 <div
-                // className={`${handles.availableQuantityContainer} mv4 c-muted-2 t-small`}
+                className={`${handles.availableQuantityContainer} mv4 c-muted-2 t-small`}
                 >
                   <FormattedMessage
                     id="store/product-quantity.quantity-available"
                     values={availableQuantity}
                   />
                 </div>
-              )}
-            </div>
-            <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
-              {selectedQuantity === 1 ?
-                <Wrapper
-                  text={'Agregar'}
-                  unavailableText="No disponible"
-                  customToastUrl="/checkout/#/cart"
-                /> :
-                <Wrapper
-                  text={'+'}
-                  unavailableText="No disponible"
-                  customToastUrl="/checkout/#/cart"
-                />
-              }
+              )} */}
+                </div>
+                <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
+                  {selectedQuantity === 1 ?
+                    <Wrapper
+                      text={'Agregar'}
+                      unavailableText="No disponible"
+                      customToastUrl="/checkout/#/cart"
+                    /> :
+                    <Wrapper
+                      text={'+'}
+                      unavailableText="No disponible"
+                      customToastUrl="/checkout/#/cart"
+                    />
+                  }
+                </div>
+              </div>
             </div>
           </div>
         </>
