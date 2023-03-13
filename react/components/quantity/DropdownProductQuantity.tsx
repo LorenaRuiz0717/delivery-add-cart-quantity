@@ -24,7 +24,8 @@ interface DropdownProps {
   selectedQuantity: QuantitySelectorStepType
   availableQuantity: number
   size: NumericSize
-  // showUnit: boolean
+  // measurementUnit: SelectedItem['measurementUnit']
+  showUnit: boolean
   quantitySelectorStep?: QuantitySelectorStepType
   selectedItem?: ProductContext['selectedItem']
   // showLabel?: boolean
@@ -52,7 +53,7 @@ const validateValue = (value: string, maxValue: number) => {
 
 const validateDisplayValue = (value: string, maxValue: number) => {
   const parsedValue = parseInt(value, 10)
-
+  console.log("parsedValueDROP", parsedValue)
   if (Number.isNaN(parsedValue) || parsedValue < 1) {
     return ''
   }
@@ -83,14 +84,15 @@ const CSS_HANDLES = [
   'quantitySelectorInputMobileContainer',
   'quantitySelectorInputContainer',
 ] as const
-
+// const DEFAULT_UNIT = 'un'
 const DropdownProductQuantity: FunctionComponent<DropdownProps> = ({
   dispatch,
   itemId,
   selectedQuantity,
   size = 'small',
   availableQuantity,
-  // showUnit,
+  // measurementUnit = DEFAULT_UNIT,
+  showUnit,
   quantitySelectorStep,
   // selectedItem,
   // showLabel = true,
@@ -164,6 +166,13 @@ const DropdownProductQuantity: FunctionComponent<DropdownProps> = ({
           onChange={(event: { target: { value: string } }) => handleChange(event.target.value)}
           placeholder=" "
           quantitySelectorStep={quantitySelectorStep}
+          showUnit={showUnit}
+        // suffix={
+        //   showUnit && measurementUnit !== DEFAULT_UNIT
+        //     ? measurementUnit
+        //     : undefined
+        // }
+
         />
       </div>
       <div
@@ -180,6 +189,7 @@ const DropdownProductQuantity: FunctionComponent<DropdownProps> = ({
           onChange={(event: { target: { value: string } }) => handleChange(event.target.value)}
           onBlur={handleInputBlur}
           placeholder=""
+
         />
       </div>
     </>

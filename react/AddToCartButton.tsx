@@ -14,7 +14,7 @@ import { Link } from 'vtex.render-runtime'
 import { useProductDispatch } from 'vtex.product-context/ProductDispatchContext'
 
 
-const add3CartButton: StorefrontFunctionComponent<any> = ({
+const addToCartButton: StorefrontFunctionComponent<any> = ({
   children,
   isContextSummarySearch = false,
   isContextPDP = false
@@ -28,6 +28,7 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
   console.log('productSelected', productSelected)
 
   const { selectedItem, selectedQuantity } = useProduct()
+
 
   const dispatch = useProductDispatch()
 
@@ -92,11 +93,13 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
     }
   }
 
+
   const handleClick: React.MouseEventHandler<HTMLDivElement> = e => {
     e.preventDefault()
     // Stop propagation so it doesn't trigger the Link component above
     e.stopPropagation()
   }
+
   return (
     <>
       {deliveryModalNeedsAppear ? (
@@ -155,24 +158,26 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
                   itemId={selectedItem}
                   selectedQuantity={selectedQuantity}
                   availableQuantity={commertialOffer.AvailableQuantity}
-                  //  onChange={handleSaveProduct}
-                  quantitySelectorStep={'unitMultiplier'}
-                  size={'small'}
+                  quantitySelectorStep={selectedItem.unitMultiplier}
+                  size={'large'}
+                  // measurementUnit={selectedItem.measurementUnit}
+                  showUnit={true}
                 />
               </div>
               <div>
                 CustomStepper
                 <StepperProductQuantity
                   dispatch={dispatch}
-                  unitMultiplier={1}
-                  measurementUnit={'un'}
-                  size={'small'}
+                  unitMultiplier={selectedItem.unitMultiplier}
+                  measurementUnit={selectedItem.measurementUnit}
+                  size={'large'}
                   selectedQuantity={selectedQuantity}
                   availableQuantity={commertialOffer.AvailableQuantity}
                   showUnit={true}
                 />
               </div>
               <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
+                WrapperFromCustom
                 <Wrapper
                   text={'Agregar'}
                   unavailableText="No disponible"
@@ -185,36 +190,12 @@ const add3CartButton: StorefrontFunctionComponent<any> = ({
 
       )}{console.log("commertialOffer.AvailableQuantity", commertialOffer.AvailableQuantity, "commertialOffer", commertialOffer)}
       {console.log("handleSaveProduct", productSelected?.itemId)}
+      {console.log("unitMultiplierCART", selectedItem.unitMultiplier)}
     </>
 
   )
 
 }
 
-export default add3CartButton
+export default addToCartButton
 
-
-{/* BaseProduct
-             <BaseProductQuantity
-             dispatch={getProduct}
-             selectedItem={selectedItem.itemId}
-             showLabel={true}
-             selectedQuantity={commertialOffer.AvailableQuantity}
-             selectorType={'dropdown'}
-             size={'small'}
-             warningQuantityThreshold={0}
-             showUnit={true}
-             quantitySelectorStep={'unitMultiplier'}
-             /> */}
-
-{/* ProductQuantity
-                <ProductQuantity
-                    warningQuantityThreshold={0}
-                    showLabel={true}
-                    size={'large'}
-                    selectorType={'dropdown'}
-                    showUnit={true}
-                    quantitySelectorStep={'unitMultiplier'}
-                    dispatch={selectedItem}
-                    selectedQuantity={0}
-                /> */}

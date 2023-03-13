@@ -8,14 +8,13 @@ import { DispatchFunction } from 'vtex.product-context/ProductDispatchContext'
 
 const DEFAULT_UNIT = 'un'
 export type NumericSize = 'small' | 'regular' | 'large'
-export type QuantitySelectorStepType = 'unitMultiplier' | 'singleUnit'
+
 interface StepperProps {
   dispatch: DispatchFunction
   unitMultiplier: SelectedItem['unitMultiplier']
   measurementUnit: SelectedItem['measurementUnit']
-  selectedQuantity: QuantitySelectorStepType
-  availableQuantity: number
-  // onChange: (e: OnChangeCallback) => void
+  selectedQuantity: number
+  availableQuantity: SelectedItem['availableQuantity']
   size: NumericSize
   showUnit: boolean
 }
@@ -30,7 +29,7 @@ const normalizeValue = (value: number, maxValue: number) =>
 
 const validateValue = (value: string, maxValue: number) => {
   const parsedValue = parseInt(value, 10)
-
+  console.log("parsedValueSTEPPER", parsedValue)
   if (Number.isNaN(parsedValue)) {
     return 1
   }
@@ -40,7 +39,7 @@ const validateValue = (value: string, maxValue: number) => {
 
 const validateDisplayValue = (value: string, maxValue: number) => {
   const parsedValue = parseInt(value, 10)
-
+  console.log("parsedValueSTEPPER", parsedValue)
   if (Number.isNaN(parsedValue) || parsedValue < 1) {
     return ''
   }
@@ -50,12 +49,12 @@ const validateDisplayValue = (value: string, maxValue: number) => {
 
 const StepperProductQuantity: FunctionComponent<StepperProps> = ({
   dispatch,
-  unitMultiplier = 1,
+  unitMultiplier,
   measurementUnit = DEFAULT_UNIT,
   size = 'small',
   selectedQuantity,
   availableQuantity,
-  showUnit,
+  showUnit
 }) => {
   const onChange = useCallback(
     (e: OnChangeCallback) => {
@@ -63,18 +62,22 @@ const StepperProductQuantity: FunctionComponent<StepperProps> = ({
     },
     [dispatch]
   )
+
   const handles = useCssHandles(CSS_HANDLES)
   const [displayValue, setDisplayValue] = useState(`${selectedQuantity}`)
-  console.log(displayValue)
+  console.log('displayValueSTEPPER', displayValue)
   const handleChange = (value: string) => {
+    console.log("VALUESTRING", value)
     const newValidatedValue = validateValue(value, availableQuantity)
     const newDisplayValue = validateDisplayValue(value, availableQuantity)
     setDisplayValue(newDisplayValue)
     onChange({ value: newValidatedValue })
   }
+
   return (
     <div className={handles.quantitySelectorStepper}>
       <NumericStepper
+        value={selectedQuantity}
         size={size}
         minValue={1}
         unitMultiplier={unitMultiplier}
@@ -84,10 +87,15 @@ const StepperProductQuantity: FunctionComponent<StepperProps> = ({
             : undefined
         }
         onChange={(event: { target: { value: string } }) => handleChange(event.target.value)}
-        value={selectedQuantity}
         maxValue={availableQuantity || undefined}
       />
+
       {console.log('selectedQuantitystepper', selectedQuantity)}
+      {console.log('displayValueSTEPPER', displayValue)}
+      {console.log('availableQuantitySTEPPER', availableQuantity)}
+      {console.log('measurementUnitSTEPPER', measurementUnit)}
+      {console.log('unitMultiplierUnitSTEPPER', unitMultiplier)}
+
     </div>
   )
 }
