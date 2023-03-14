@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import DropdownProductQuantity from './components/quantity/DropdownProductQuantity'
 import StepperProductQuantity from './components/quantity/StepperProductQuantity'
-import { Wrapper } from 'vtex.add-to-cart-button'
+// import { Wrapper } from 'vtex.add-to-cart-button'
 import { useOrderForm } from 'vtex.store-resources/OrderFormContext'
 import { useProduct } from 'vtex.product-context'
 import { useLazyQuery } from 'react-apollo'
@@ -12,7 +12,7 @@ import Loader from './components/Loader'
 import { Button } from 'vtex.styleguide'
 import { Link } from 'vtex.render-runtime'
 import { useProductDispatch } from 'vtex.product-context/ProductDispatchContext'
-
+import OrderContext from './components/orderform/OrderContext'
 
 const addToCartButton: StorefrontFunctionComponent<any> = ({
   children,
@@ -176,14 +176,15 @@ const addToCartButton: StorefrontFunctionComponent<any> = ({
                   showUnit={true}
                 />
               </div>
-              <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
+              <div><OrderContext /></div>
+              {/* <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
                 WrapperFromCustom
                 <Wrapper
                   text={'Agregar'}
                   unavailableText="No disponible"
                   customToastUrl="/checkout/#/cart"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </>
