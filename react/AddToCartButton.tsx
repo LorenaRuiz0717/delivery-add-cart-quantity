@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import DropdownProductQuantity from './components/quantity/DropdownProductQuantity'
-import StepperProductQuantity from './components/quantity/StepperProductQuantity'
+// import StepperProductQuantity from './components/quantity/StepperProductQuantity'
 // import { Wrapper } from 'vtex.add-to-cart-button'
 import { useOrderForm } from 'vtex.store-resources/OrderFormContext'
 import { useProduct } from 'vtex.product-context'
@@ -164,7 +164,7 @@ const addToCartButton: StorefrontFunctionComponent<any> = ({
                   showUnit={true}
                 />
               </div>
-              <div>
+              {/* <div>
                 CustomStepper
                 <StepperProductQuantity
                   dispatch={dispatch}
@@ -175,8 +175,9 @@ const addToCartButton: StorefrontFunctionComponent<any> = ({
                   availableQuantity={commertialOffer.AvailableQuantity}
                   showUnit={true}
                 />
-              </div>
+              </div> */}
               <div><OrderContext /></div>
+
               {/* <div className="vtex-flex-layout-0-x-flexCol vtex-flex-layout-0-x-flexCol--custom-btn-add">
                 WrapperFromCustom
                 <Wrapper

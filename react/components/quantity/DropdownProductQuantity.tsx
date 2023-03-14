@@ -5,6 +5,7 @@ import { SelectedItem } from 'vtex.product-context'
 import { useDevice } from 'vtex.device-detector'
 import { DispatchFunction } from 'vtex.product-context/ProductDispatchContext'
 import { ProductContext } from 'vtex.product-context'
+// import OrderContext from '../orderform/OrderContext'
 // import { OnChangeCallback, BaseProps } from './BaseProductQuantity'
 
 const MAX_DROPDOWN_VALUE = 10
